@@ -152,5 +152,3 @@ func main() {
 	horror_movies(netflix_titles)
 	indian_movies(netflix_titles)
 }
-
-//nidhi
