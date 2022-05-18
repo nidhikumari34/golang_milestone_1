@@ -10,21 +10,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type netflix_shows_db struct {
-	show_id      string
-	show_type    string
-	title        string
-	director     string
-	cast         string
-	country      string
-	date_added   string
-	release_year string
-	rating       string
-	duration     string
-	listed_in    string
-	description  string
-}
-
 const (
 	username = "root"
 	password = "knightrider@6N"
@@ -105,7 +90,7 @@ func create_Table(db *sql.DB) error {
 }
 
 //inserting rows in netflix_show_details table
-func insert(db *sql.DB, p netflix_shows_db) error {
+func insert(db *sql.DB, p netflix_shows) error {
 	query := "INSERT INTO netflix_show_details(show_id,show_type,title,director,cast,country,date_added,release_year,rating,duration,listed_in,description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
@@ -156,7 +141,7 @@ func insert_db(netflix_titles [][]string) {
 	}
 
 	for _, line := range netflix_titles {
-		rec := netflix_shows_db{
+		rec := netflix_shows{
 			show_id:      line[0],
 			show_type:    line[1],
 			title:        line[2],

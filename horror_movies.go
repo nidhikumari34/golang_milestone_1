@@ -9,22 +9,6 @@ import (
 	"time"
 )
 
-//struct for show details
-type netflix_shows_hm struct {
-	show_id      string
-	show_type    string
-	title        string
-	director     string
-	cast         string
-	country      string
-	date_added   string
-	release_year string
-	rating       string
-	duration     string
-	listed_in    string
-	description  string
-}
-
 //First n records b/w start and end date where listed_in have Horror Movies
 func horror_movies(netflix_titles [][]string) {
 	var n int
@@ -47,7 +31,7 @@ func horror_movies(netflix_titles [][]string) {
 	startTime := time.Now()
 
 	for _, line := range netflix_titles {
-		rec := netflix_shows_hm{
+		rec := netflix_shows{
 			show_id:      line[0],
 			show_type:    line[1],
 			title:        line[2],
