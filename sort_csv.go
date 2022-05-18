@@ -2,6 +2,7 @@ package main
 
 import "sort"
 
+//struct for show details
 type netflix_shows3 struct {
 	show_id      string
 	show_type    string

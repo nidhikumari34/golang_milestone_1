@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+//main funtion
 func main() {
 	csvFile, err := os.Open("netflix_titles.csv")
 	if err != nil {

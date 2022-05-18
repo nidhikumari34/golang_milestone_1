@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+//struct for show details
 type netflix_shows2 struct {
 	show_id      string
 	show_type    string
