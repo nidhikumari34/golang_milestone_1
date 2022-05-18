@@ -10,7 +10,7 @@ import (
 )
 
 //struct for show details
-type netflix_shows1 struct {
+type netflix_shows_hm struct {
 	show_id      string
 	show_type    string
 	title        string
@@ -47,7 +47,7 @@ func horror_movies(netflix_titles [][]string) {
 	startTime := time.Now()
 
 	for _, line := range netflix_titles {
-		rec := netflix_shows1{
+		rec := netflix_shows_hm{
 			show_id:      line[0],
 			show_type:    line[1],
 			title:        line[2],

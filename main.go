@@ -6,7 +6,6 @@ import (
 	"os"
 )
 
-//main funtion
 func main() {
 	csvFile, err := os.Open("netflix_titles.csv")
 	if err != nil {
@@ -20,6 +19,7 @@ func main() {
 		log.Println(err)
 	}
 
+	insert_db(netflix_titles)
 	netflix_titles = sort_csv(netflix_titles)
 	tv_shows(netflix_titles)
 	horror_movies(netflix_titles)
