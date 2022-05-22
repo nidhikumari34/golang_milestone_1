@@ -1,16 +1,12 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/csv"
-	"fmt"
 	"log"
 	"os"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
-type netflixshows struct {
+type netflix_shows struct {
 	show_id      string
 	show_type    string
 	title        string
@@ -38,22 +34,9 @@ func main() {
 		log.Println(err)
 	}
 
+	insert_db(netflix_titles) //insert csv data to db
 	netflix_titles = sort_csv(netflix_titles)
-
-	db, err := sql.Open("mysql", "root:<knightrider@6N>@tcp(127.0.0.1:3306)/test")
-	if err != nil {
-		panic(err.Error())
-	}
-	defer db.Close()
-	insert, err := db.Query("INSERT INTO netflix_show_details VALUES('1')")
-	if err != nil {
-		panic(err.Error())
-	}
-	defer insert.Close()
-	fmt.Println("Success!")
-
-	//insert_db(db, netflixshows)
-	//tv_shows(netflix_titles)
-	//horror_movies(netflix_titles)
-	//indian_movies(netflix_titles)
+	tv_shows(netflix_titles)
+	horror_movies(netflix_titles)
+	indian_movies(netflix_titles)
 }
