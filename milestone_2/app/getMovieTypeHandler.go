@@ -11,7 +11,7 @@ import (
 )
 
 //Horror Movies
-func getMovieType(w http.ResponseWriter, r *http.Request) {
+func GetMovieType(w http.ResponseWriter, r *http.Request) {
 	var movie_type []Netflix_shows
 	vars := mux.Vars(r)
 	type_val := vars["movieType"]
@@ -37,9 +37,9 @@ func getMovieType(w http.ResponseWriter, r *http.Request) {
 				movie_type = append(movie_type, rec)
 			}
 		}
-		endTime = time.Now()
-		execTime = endTime.Sub(startTime)
-		w.Header().Add("TIME-TO-EXECUTE", execTime.String())
+		EndTime = time.Now()
+		ExecTime = EndTime.Sub(StartTime)
+		w.Header().Add("X-TIME-TO-EXECUTE", ExecTime.String())
 		w.Header().Add("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(movie_type)
 	} else {

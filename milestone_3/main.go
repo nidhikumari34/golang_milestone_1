@@ -1,9 +1,8 @@
 package main
 
-import (
-	"shows/app"
-)
+import "show/app"
 
 func main() {
 	app.Start()
+
 }

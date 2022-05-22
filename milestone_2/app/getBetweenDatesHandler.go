@@ -10,7 +10,7 @@ import (
 )
 
 //Shows between start and end date
-func getBetweenDates(w http.ResponseWriter, r *http.Request) {
+func GetBetweenDates(w http.ResponseWriter, r *http.Request) {
 	var betweenShows []Netflix_shows
 	vars := mux.Vars(r)
 	start_date := vars["startDate"]
@@ -41,9 +41,9 @@ func getBetweenDates(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if betweenShows != nil {
-		endTime = time.Now()
-		execTime = endTime.Sub(startTime)
-		w.Header().Add("TIME-TO-EXECUTE", execTime.String())
+		EndTime = time.Now()
+		ExecTime = EndTime.Sub(StartTime)
+		w.Header().Add("X-TIME-TO-EXECUTE", ExecTime.String())
 		w.Header().Add("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(betweenShows)
 	} else {

@@ -9,30 +9,15 @@ import (
 	"time"
 )
 
-type netflix_shows struct {
-	show_id      string
-	show_type    string
-	title        string
-	director     string
-	cast         string
-	country      string
-	date_added   string
-	release_year string
-	rating       string
-	duration     string
-	listed_in    string
-	description  string
-}
-
-//First n records b/w start and end date where type is TV Show
-func tv_shows(netflix_titles [][]string) {
+//First n records b/w start and end date where type is Movie and country is India
+func indian_movies(netflix_titles [][]string) {
 	var n int
 	var start, end string
 	var start_dt, end_dt time.Time
 	i := 1
 	reader := bufio.NewReader(os.Stdin)
 
-	log.Printf("Enter the value of n for TV Shows :")
+	log.Printf("Enter the value of n for Indian Movies :")
 	fmt.Scanf("%d", &n)
 
 	log.Println("Enter start date (Month DD, YYYY) :")
@@ -62,7 +47,7 @@ func tv_shows(netflix_titles [][]string) {
 		}
 		date_added, _ := time.Parse("January 02, 2006", rec.date_added)
 
-		if rec.show_type == "TV Show" && i <= n && date_added.Before(end_dt) && date_added.After(start_dt) {
+		if rec.show_type == "Movie" && rec.country == "India" && i <= n && date_added.Before(end_dt) && date_added.After(start_dt) {
 			fmt.Println("\n", rec.show_id+", "+rec.show_type+", "+rec.title+", "+rec.director+", "+rec.cast+", "+rec.country+", "+rec.date_added+", "+rec.release_year+", "+rec.rating+", "+rec.duration+", "+rec.listed_in+", "+rec.description)
 			i++
 		}

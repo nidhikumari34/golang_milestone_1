@@ -6,25 +6,31 @@ import (
 	"time"
 )
 
-//logging execution time
+//middleware for logging execution time
 func TimingMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		startTime = time.Now()
-		log.Printf("Execution start: %s", startTime.String())
+		StartTime = time.Now()
+		log.Printf("Execution start: %s", StartTime.String())
 		next.ServeHTTP(w, r)
-		log.Printf("Execution end: %s", endTime.String())
-		log.Printf("Total execution time: %s", execTime.String())
+		log.Printf("Execution end: %s", EndTime.String())
+		log.Printf("Total execution time: %s", ExecTime.String())
 	}
 }
 
-//token verification
+//middleware for token fetching from header
 func AuthTokenMiddleware(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		header := r.Header
+		token := r.Header.Get(("X-Auth-Token"))
 
-		if header.Get("Auth-Token") == "" {
-			w.WriteHeader(http.StatusForbidden)
-			w.Write([]byte("AuthToken missing"))
+		if token == "" {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte("X-Auth-Token missing"))
+			return
+		}
+
+		if !ValidToken(token) {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte("Invalid X-Auth-Token"))
 			return
 		}
 		h.ServeHTTP(w, r)

@@ -5,11 +5,29 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 )
 
-var startTime, endTime time.Time
-var execTime time.Duration
+var Key = []byte("abc")
+var TokenString string
+var StartTime, EndTime time.Time
+var ExecTime time.Duration
+
+var Users = map[string]string{
+	"user1": "password1",
+	"user2": "password2",
+}
+
+type Credentials struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type Claims struct {
+	Username string `json:"username"`
+	jwt.StandardClaims
+}
 
 //struct for show details
 type Netflix_shows struct {
@@ -31,10 +49,12 @@ func Start() {
 	router := mux.NewRouter()
 
 	//define route
-	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(getTVShows))).Methods(http.MethodGet).Queries("count", "{count:[0-9]+}")
-	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(getMovieType))).Methods(http.MethodGet).Queries("movieType", "{movieType}")
-	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(getCountryMovies))).Methods(http.MethodGet).Queries("country", "{country}")
-	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(getBetweenDates))).Methods(http.MethodGet).Queries("startDate", "{startDate}", "endDate", "{endDate}")
+	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(GetTVShows))).Methods(http.MethodGet).Queries("count", "{count:[0-9]+}")
+	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(GetMovieType))).Methods(http.MethodGet).Queries("movieType", "{movieType}")
+	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(GetCountryMovies))).Methods(http.MethodGet).Queries("country", "{country}")
+	router.HandleFunc("/tvshows", AuthTokenMiddleware(TimingMiddleware(GetBetweenDates))).Methods(http.MethodGet).Queries("startDate", "{startDate}", "endDate", "{endDate}")
+
+	router.HandleFunc("/login", Login).Methods("POST")
 
 	//starting server
 	log.Fatal(http.ListenAndServe("localhost:8000", router))

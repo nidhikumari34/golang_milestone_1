@@ -10,7 +10,7 @@ import (
 )
 
 //Indian Movies
-func getCountryMovies(w http.ResponseWriter, r *http.Request) {
+func GetCountryMovies(w http.ResponseWriter, r *http.Request) {
 	var countryMovies []Netflix_shows
 	vars := mux.Vars(r)
 	country_val := vars["country"]
@@ -36,9 +36,9 @@ func getCountryMovies(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if countryMovies != nil {
-		endTime = time.Now()
-		execTime = endTime.Sub(startTime)
-		w.Header().Add("TIME-TO-EXECUTE", execTime.String())
+		EndTime = time.Now()
+		ExecTime = EndTime.Sub(StartTime)
+		w.Header().Add("X-TIME-TO-EXECUTE", ExecTime.String())
 		w.Header().Add("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(countryMovies)
 	} else {

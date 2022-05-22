@@ -11,8 +11,9 @@ import (
 )
 
 //First n TV Shows
-func getTVShows(w http.ResponseWriter, r *http.Request) {
+func GetTVShows(w http.ResponseWriter, r *http.Request) {
 	var tvshows []Netflix_shows
+
 	vars := mux.Vars(r)
 	count_val, err := strconv.Atoi(vars["count"])
 	if err != nil {
@@ -37,9 +38,9 @@ func getTVShows(w http.ResponseWriter, r *http.Request) {
 		}
 		tvshows = append(tvshows, rec)
 	}
-	endTime = time.Now()
-	execTime = endTime.Sub(startTime)
-	w.Header().Add("TIME-TO-EXECUTE", execTime.String())
+	EndTime = time.Now()
+	ExecTime = EndTime.Sub(StartTime)
+	w.Header().Add("X-TIME-TO-EXECUTE", ExecTime.String())
 	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(tvshows[:count_val])
 }
