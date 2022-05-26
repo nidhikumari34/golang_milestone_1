@@ -10,6 +10,16 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+var db *sql.DB
+var netflix_titles [][]string
+
+const (
+	username = "root"
+	password = "knightrider@6N"
+	hostname = "127.0.0.1:3306"
+	dbname   = "golang_api"
+)
+
 func dsn(dbName string) string {
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
 }

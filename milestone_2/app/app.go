@@ -57,5 +57,6 @@ func Start() {
 	router.HandleFunc("/login", Login).Methods("POST")
 
 	//starting server
+	log.Println("Server is running!")
 	log.Fatal(http.ListenAndServe("localhost:8000", router))
 }

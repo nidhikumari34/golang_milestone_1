@@ -45,5 +45,4 @@ func GetMovieType(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Printf("Invalid input")
 	}
-
 }

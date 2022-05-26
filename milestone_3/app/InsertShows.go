@@ -34,7 +34,6 @@ func InsertRows(db *sql.DB, p Netflix_shows) error {
 		p.Listed_in,
 		p.Description)
 	if err != nil {
-		log.Printf("%s when inserting row into netflix_show_details table", err)
 		return err
 	}
 	rows, err := res.RowsAffected()
@@ -64,10 +63,6 @@ func InsertShows(db *sql.DB, netflix_titles [][]string) error {
 			Description:  line[11],
 		}
 		err = InsertRows(db, rec)
-		if err != nil {
-			log.Printf("Insert failed with error %s", err)
-		}
 	}
-	log.Printf("Successfully inserted rows in table")
 	return err
 }
